@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/coreos/go-systemd/v22/journal"
@@ -21,18 +20,19 @@ func outputMessage(message string, filename string, journald bool, stdout bool) 
 	textBytes = append(textBytes, invalidUTF8...)
 
 	if filename != "" {
-		// Resolve the home directory in filePath
-		homedir, err := os.UserHomeDir()
-		filePath := filepath.Join(homedir, filename)
-
 		// Open the file in append mode. If it doesn't exist, create it with 0666 permissions
-		file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+		file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
 			log.Fatalf("Failed to open file: %v", err)
 		}
 		defer file.Close()
 
 		_, err = file.Write(textBytes)
+		if err != nil {
+			log.Fatalf("Failed to write to file: %v", err)
+		}
+
+		_, err = file.Write([]byte("\n"))
 		if err != nil {
 			log.Fatalf("Failed to write to file: %v", err)
 		}
