@@ -8,4 +8,4 @@ Params:
 - `--loop` - Add to dump one line per second to the place.
 - `--stdout` - Dump to stdout.
 - `--journald` - Dump to journald.
-- ``--filename <filename>` - Dump to the specified file.
+- `--filename <filename>` - Dump to the specified file.
