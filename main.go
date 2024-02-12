@@ -41,7 +41,7 @@ func outputMessage(message string, filename string, journald bool, stdout bool) 
 	if journald {
 		err := journal.Print(journal.PriInfo, string(textBytes))
 		if err != nil {
-			fmt.Printf("Error sending log to journald: %v\n", err)
+			log.Fatalf("Error sending log to journald: %v\n", err)
 		}
 	}
 
