@@ -21,11 +21,9 @@ func outputMessage(message string, filename string, journald bool, stdout bool) 
 	textBytes = append(textBytes, invalidUTF8...)
 
 	if filename != "" {
-		filePath := "zorkdork.log"
-
 		// Resolve the home directory in filePath
 		homedir, err := os.UserHomeDir()
-		filePath = filepath.Join(homedir, filePath)
+		filePath := filepath.Join(homedir, filename)
 
 		// Open the file in append mode. If it doesn't exist, create it with 0666 permissions
 		file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
